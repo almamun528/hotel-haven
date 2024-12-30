@@ -1,13 +1,14 @@
 import Lottie from 'lottie-react';
-import React from 'react';
-import { Link } from "react-router-dom";
+import React, { useContext } from 'react';
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import LoginAnimation from '../assets/login.json'
-
-
-
+import AuthContext from '../Provider/AuthContext';
+import Swal from 'sweetalert2';
 
 const Login = () => {
-
+const {userLogin} = useContext(AuthContext);
+const navigate = useNavigate()
+const location = useLocation()
 
 // Login Form Trigger 
 const handleLogin = (e)=>{
@@ -16,7 +17,43 @@ const handleLogin = (e)=>{
   const email = form.email.value 
   const password = form.password.value 
 
-  console.log(email, ' ' ,password)
+
+  userLogin(email, password)
+    .then((result) => {
+      navigate(location?.state ? location.state : "/");
+
+      // tost massage
+      setTimeout(() => {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Signed in successfully",
+        });
+      }, 1000);
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+// tost message
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "invalid login credential",
+        // footer: "invalid login credential",
+      });
+      console.log("ERROR ", errorMessage, errorCode);
+    });
+
 }
 
 

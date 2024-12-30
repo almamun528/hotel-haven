@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import registerAnimation from '../assets/register.json'
 import Lottie from 'lottie-react';
 import { Link } from 'react-router-dom';
+import AuthContext from '../Provider/AuthContext';
+import Swal from 'sweetalert2';
 
 const Register = () => {
+const { createUser, setUser } = useContext(AuthContext);
 
   // Form Trigger Function
   const handleRegister = (e)=>{
@@ -14,6 +17,25 @@ const Register = () => {
     const photo = form.photo.value 
     const password = form.password.value 
     console.log(name, email, photo, password)
+
+
+      createUser(email, password)
+        .then((result) => {
+          console.log(result.user);
+          setTimeout(()=>{
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Your work has been saved",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          },1000)
+          setUser(user);
+      })
+        .catch((error) => {
+          console.log("ERROR", error?.message);
+        });
   }
     return (
       <>
