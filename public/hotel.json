@@ -1,0 +1,263 @@
+[
+  {
+    "title": "Prestige Suite",
+    "size": "200m²",
+    "view": "Great Mountain View",
+    "guests": 6,
+    "beds": 3,
+    "bathrooms": 3,
+    "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+    "family_friendly_amenities": [
+      "Kids Swimming Pool",
+      "Extra Beds/Baby Crib",
+      "Washing Machine"
+    ],
+    "room_amenities": [
+      "Air Conditioner",
+      "Cable TV",
+      "Wi-Fi & Internet",
+      "Towels",
+      "Slippers",
+      "Hair Dryer",
+      "Shampoo",
+      "Espresso Machine",
+      "Safe Box",
+      "Welcome Drinks",
+      "Pet Friendly",
+      "In-room Refrigerator"
+    ],
+    "image": "https://i.ibb.co/brMqFxb/property10.jpg"
+  },
+  {
+    "title": "Luxury Penthouse",
+    "size": "300m²",
+    "view": "City Skyline",
+    "guests": 8,
+    "beds": 4,
+    "bathrooms": 4,
+    "description": "Experience unmatched luxury with panoramic city views, elegant interiors, and a spacious layout for ultimate comfort.",
+    "family_friendly_amenities": [
+      "Kids Play Area",
+      "Baby Sitting Service",
+      "Laundry Service"
+    ],
+    "room_amenities": [
+      "Central Heating",
+      "Smart TV",
+      "Wi-Fi",
+      "Bathrobes",
+      "Slippers",
+      "Hair Dryer",
+      "Mini Bar",
+      "Coffee Maker",
+      "Safe Box",
+      "Luxury Toiletries",
+      "Pet Friendly"
+    ],
+    "image": "https://i.ibb.co/2yLZfXf/property9.jpg"
+  },
+  {
+    "title": "Ocean View Suite",
+    "size": "250m²",
+    "view": "Oceanfront",
+    "guests": 4,
+    "beds": 2,
+    "bathrooms": 2,
+    "description": "Wake up to breathtaking ocean views and enjoy the serenity of beachfront living with top-notch amenities.",
+    "family_friendly_amenities": [
+      "Beach Access",
+      "Kids Play Area",
+      "Laundry Service"
+    ],
+    "room_amenities": [
+      "Air Conditioner",
+      "Cable TV",
+      "Wi-Fi",
+      "Beach Towels",
+      "Slippers",
+      "Hair Dryer",
+      "Shampoo",
+      "Espresso Machine",
+      "Safe Box",
+      "Welcome Drinks"
+    ],
+    "image": "https://i.ibb.co/7QMMxzS/property8.jpg"
+  },
+  {
+    "title": "Cozy Cabin",
+    "size": "150m²",
+    "view": "Forest Retreat",
+    "guests": 4,
+    "beds": 2,
+    "bathrooms": 2,
+    "description": "Nestled in the heart of the woods, this cozy cabin offers a tranquil escape for nature lovers.",
+    "family_friendly_amenities": [
+      "Board Games",
+      "Fireplace",
+      "Outdoor Play Area"
+    ],
+    "room_amenities": [
+      "Heater",
+      "Wi-Fi",
+      "Cable TV",
+      "Towels",
+      "Hair Dryer",
+      "Coffee Maker",
+      "Safe Box",
+      "Outdoor Grill"
+    ],
+    "image": "https://i.ibb.co/3MdnRGw/property7.jpg"
+  },
+  {
+    "title": "Mountain Lodge",
+    "size": "180m²",
+    "view": "Snowy Peaks",
+    "guests": 5,
+    "beds": 3,
+    "bathrooms": 2,
+    "description": "A luxurious retreat with breathtaking mountain views and modern amenities for a comfortable stay.",
+    "family_friendly_amenities": [
+      "Kids Play Area",
+      "Hiking Trail Access",
+      "Ski Equipment Storage"
+    ],
+    "room_amenities": [
+      "Air Conditioner",
+      "Fireplace",
+      "Wi-Fi",
+      "Towels",
+      "Hair Dryer",
+      "Mini Fridge",
+      "Shampoo",
+      "Safe Box",
+      "Welcome Drinks"
+    ],
+    "image": "https://i.ibb.co/6wpkLT6/property6.jpg"
+  },
+  {
+    "title": "Urban Loft",
+    "size": "120m²",
+    "view": "City Skyline",
+    "guests": 2,
+    "beds": 1,
+    "bathrooms": 1,
+    "description": "Stylish and modern loft in the heart of the city, perfect for couples or solo travelers.",
+    "family_friendly_amenities": [
+      "Baby Sitting Service",
+      "Laundry Facility",
+      "Public Transport Access"
+    ],
+    "room_amenities": [
+      "Central Heating",
+      "Smart TV",
+      "Wi-Fi",
+      "Towels",
+      "Shampoo",
+      "Espresso Machine",
+      "Safe Box",
+      "Pet Friendly"
+    ],
+    "image": "https://i.ibb.co/fC3cYWQ/property5.jpg"
+  },
+  {
+    "title": "Seaside Villa",
+    "size": "350m²",
+    "view": "Beachfront",
+    "guests": 10,
+    "beds": 5,
+    "bathrooms": 5,
+    "description": "A luxurious seaside villa with private beach access and breathtaking ocean views.",
+    "family_friendly_amenities": [
+      "Private Beach",
+      "Kids Swimming Pool",
+      "Outdoor Dining"
+    ],
+    "room_amenities": [
+      "Air Conditioner",
+      "Wi-Fi",
+      "Towels",
+      "Slippers",
+      "Hair Dryer",
+      "Espresso Machine",
+      "Mini Bar",
+      "Safe Box"
+    ],
+    "image": "https://i.ibb.co/4NwkSPV/property4.jpg"
+  },
+  {
+    "title": "Countryside Cottage",
+    "size": "170m²",
+    "view": "Rolling Hills",
+    "guests": 6,
+    "beds": 3,
+    "bathrooms": 2,
+    "description": "Relax and unwind in this charming countryside cottage surrounded by lush greenery.",
+    "family_friendly_amenities": [
+      "Kids Play Area",
+      "Pet Friendly",
+      "Outdoor Grill"
+    ],
+    "room_amenities": [
+      "Air Conditioner",
+      "Wi-Fi",
+      "Towels",
+      "Hair Dryer",
+      "Coffee Maker",
+      "Safe Box",
+      "Shampoo",
+      "Welcome Drinks"
+    ],
+    "image": "https://i.ibb.co/JsG9pTZ/property3.jpg"
+  },
+  {
+    "title": "Heritage Suite",
+    "size": "220m²",
+    "view": "Historical Landmark",
+    "guests": 5,
+    "beds": 3,
+    "bathrooms": 3,
+    "description": "Step back in time with this suite that combines heritage charm with modern comfort.",
+    "family_friendly_amenities": [
+      "Historical Tours",
+      "Kids Play Area",
+      "Laundry Service"
+    ],
+    "room_amenities": [
+      "Heater",
+      "Wi-Fi",
+      "Towels",
+      "Shampoo",
+      "Mini Fridge",
+      "Safe Box",
+      "Hair Dryer",
+      "Espresso Machine"
+    ],
+    "image": "https://i.ibb.co/zmHdRc0/property1.jpg"
+  },
+  {
+    "title": "Skyline Apartment",
+    "size": "140m²",
+    "view": "Downtown View",
+    "guests": 3,
+    "beds": 2,
+    "bathrooms": 2,
+    "description": "Enjoy modern city living in this stylish apartment with stunning views of downtown.",
+    "family_friendly_amenities": [
+      "Baby Sitting Service",
+      "Kids Play Area",
+      "Laundry Facility"
+    ],
+    "room_amenities": [
+      "Air Conditioner",
+      "Smart TV",
+      "Wi-Fi",
+      "Towels",
+      "Shampoo",
+      "Coffee Maker",
+      "Mini Fridge",
+      "Safe Box",
+      "Hair Dryer"
+    ],
+    "image": "https://i.ibb.co/rv9Z26Q/property2.jpg"
+  }
+]
