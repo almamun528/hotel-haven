@@ -56,11 +56,6 @@ const handleLogin = (e)=>{
 
 }
 
-
-
-
-
-
     return (
       <>
         <div className="hero bg-base-200 min-h-screen">

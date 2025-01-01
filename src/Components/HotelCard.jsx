@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const HotelCard = ({ rooms }) => {
     const {
@@ -12,6 +13,7 @@ const HotelCard = ({ rooms }) => {
       family_friendly_amenities,
       room_amenities,
       image,
+      _id
     } = rooms;
   return (
     <>
@@ -26,7 +28,11 @@ const HotelCard = ({ rooms }) => {
           <p> Beds : {beds}</p>
           <p> Guest : {guests}</p>
           <div className="card-actions">
-            <button className="btn btn-primary">Book Now</button>
+
+            <Link to={`/hotels/${_id}`}>
+              <button className="btn btn-primary">Book Now</button>
+            </Link>
+            
           </div>
         </div>
       </div>

@@ -4,20 +4,45 @@ import AuthContext from '../Provider/AuthContext';
 
 const NavBar = () => {
   const {user, logOut}= useContext(AuthContext)
- console.log(user)
-    const links = <>
-    <li> <Link to='/'> Home  </Link> </li>
-    <li> <Link to='/hotels'> Hotels  </Link> </li>
-    </>
-    const handleLogOut = () => {
-      logOut()
-        .then(() => {
-          console.log("User LogOut Done");
-        })
-        .then((error) => {
-          console.log(error?.message);
-        });
-    };
+//  console.log(user)
+ const handleLogOut = () => {
+   logOut()
+     .then(() => {
+       console.log("User LogOut Done");
+     })
+     .then((error) => {
+       console.log(error?.message);
+     });
+ };
+    const links = (
+      <>
+        <li>
+          {" "}
+          <Link to="/"> Home </Link>{" "}
+        </li>
+        <li>
+          {" "}
+          <Link to="/hotels"> Hotels </Link>{" "}
+        </li>
+        {/* <li>
+          {" "}
+          <Link to="/details"> Details </Link>{" "}
+        </li> */}
+      </>
+    );
+    // !Profile Links
+    const profileLinks = (
+      <>
+        <li>
+          {" "}
+          <Link to="/myBooking">My Booking</Link>{" "}
+        </li>
+
+        <li onClick={handleLogOut}>
+          <button>Logout</button>
+        </li>
+      </>
+    );
 
     return (
       <>
@@ -78,15 +103,8 @@ const NavBar = () => {
                     tabIndex={0}
                     className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
                   >
-                    <li>
-                      <a className="justify-between">Profile</a>
-                    </li>
-                    <li>
-                      <a>Settings</a>
-                    </li>
-                    <li>
-                      <button onClick={handleLogOut}>Logout</button>
-                    </li>
+                    {/* User Profile Links is here  */}
+                    {profileLinks}
                   </ul>
                 </div>
               </>

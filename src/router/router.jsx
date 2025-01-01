@@ -4,11 +4,16 @@ import Home from "../Pages/Home";
 import Login from "../Pages/Login";
 import Hotels from "../Pages/Hotels";
 import Register from "../Pages/Register";
+import PrivateRoute from "./PrivateRoute";
+import Details from "../Pages/Details";
+import MyBooking from "../Pages/MyBooking";
+import Error from "../Components/Error";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
+    errorElement:<Error/>,
     children: [
       {
         index: true,
@@ -25,6 +30,24 @@ const router = createBrowserRouter([
       {
         path: "hotels",
         element: <Hotels />,
+      },
+      {
+        path: "hotels/:id",
+        element: (
+          <PrivateRoute>
+            <Details />
+          </PrivateRoute>
+        ),
+        loader:({params})=> fetch(`http://localhost:300/hotels/${params.id}`)
+      },
+      {
+        path: "myBooking/",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <MyBooking />{" "}
+          </PrivateRoute>
+        ),
       },
     ],
   },
