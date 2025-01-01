@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import registerAnimation from '../assets/register.json'
 import Lottie from 'lottie-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../Provider/AuthContext';
 import Swal from 'sweetalert2';
 
 const Register = () => {
 const { createUser, setUser } = useContext(AuthContext);
-
+const navigate = useNavigate()
   // Form Trigger Function
   const handleRegister = (e)=>{
     e.preventDefault()
@@ -19,23 +19,24 @@ const { createUser, setUser } = useContext(AuthContext);
     console.log(name, email, photo, password)
 
 
-      createUser(email, password)
-        .then((result) => {
-          console.log(result.user);
-          setTimeout(()=>{
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Your work has been saved",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          },1000)
-          setUser(user);
-      })
-        .catch((error) => {
-          console.log("ERROR", error?.message);
-        });
+     createUser(email, password)
+       .then((result) => {
+         const user = result.user; // Extract the user from the result
+         setUser(user); // Set the user in the AuthContext
+         navigate("/"); // Navigate to the home page
+         setTimeout(() => {
+           Swal.fire({
+             position: "top-end",
+             icon: "success",
+             title: "Registration successful",
+             showConfirmButton: false,
+             timer: 1500,
+           });
+         }, 1000);
+       })
+       .catch((error) => {
+         console.error("ERROR", error?.message);
+       });
   }
     return (
       <>

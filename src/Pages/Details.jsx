@@ -31,14 +31,14 @@ const Details = () => {
   const handleBookingForm = (e) => {
     e.preventDefault();
     const form = e.target;
-    const email = UserEmail;
+    const myEmail = UserEmail;
     const roomName = title;
     const bed = beds;
     const pricePerNight = form.price.value;
     const phoneNumber = form.phone.value;
     // Booking Data
     const bookedRoom = {
-      email,
+      myEmail,
       roomName,
       bed,
       pricePerNight,
@@ -61,7 +61,7 @@ const Details = () => {
             Swal.fire({
               position: "top-end",
               icon: "success",
-              title: "Your work has been saved",
+              title: "Room Is Booked For You",
               showConfirmButton: false,
               timer: 1500,
             });

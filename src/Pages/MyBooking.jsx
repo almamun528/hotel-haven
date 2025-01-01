@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import AuthContext from "../Provider/AuthContext";
 
 const MyBooking = () => {
   const [myRoom, setMyRoom] = useState([]);
-
+    const {user} = useContext(AuthContext)
   useEffect(() => {
-    fetch("http://localhost:3000/myBooking")
+    fetch(`http://localhost:3000/myBooking?email=${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setMyRoom(data);
