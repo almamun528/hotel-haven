@@ -5,11 +5,10 @@ import HotelCard from '../Components/HotelCard';
 const Hotels = () => {
     const [rooms, setRooms] = useState()
     useEffect(()=>{
-        fetch('/hotel.json')
+        fetch('http://localhost:300/hotels')
         .then(res =>res.json())
         .then(data => setRooms(data))
     },[])
-// console.log()
 
     return (
       <>
