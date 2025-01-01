@@ -38,7 +38,7 @@ const router = createBrowserRouter([
             <Details />
           </PrivateRoute>
         ),
-        loader:({params})=> fetch(`http://localhost:300/hotels/${params.id}`)
+        loader:({params})=> fetch(`http://localhost:3000/hotels/${params.id}`)
       },
       {
         path: "myBooking/",

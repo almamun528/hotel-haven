@@ -3,6 +3,7 @@ import { useLoaderData } from "react-router-dom";
 import AuthContext from "../Provider/AuthContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import Datepicker CSS
+import Swal from "sweetalert2";
 
 const Details = () => {
   const hotelData = useLoaderData();
@@ -12,7 +13,7 @@ const Details = () => {
 
   const [selectedDate, setSelectedDate] = useState(new Date()); // State for date picker
 
-// ? DeStructure the Object 
+  // ? DeStructure the Object
   const {
     title,
     size,
@@ -34,7 +35,8 @@ const Details = () => {
     const roomName = title;
     const bed = beds;
     const pricePerNight = form.price.value;
-    const phoneNumber = form.phone.value
+    const phoneNumber = form.phone.value;
+    // Booking Data
     const bookedRoom = {
       email,
       roomName,
@@ -44,6 +46,31 @@ const Details = () => {
       bookingDate: selectedDate, // Include the selected date
     };
     console.log(bookedRoom);
+    // ? Send the Booking Data to the dataBase
+    fetch("http://localhost:3000/hotel-booking", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(bookedRoom),
+    })
+      .then((res) => {
+        // console.log(res); // Log response to check headers and status
+        return res.json();
+      })
+      .then((data) => {
+        if(data.acknowledged){
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Your work has been saved",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+        }
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error); // Catch and log any errors
+      });
   };
 
   return (
@@ -166,7 +193,6 @@ const Details = () => {
                           type="number"
                           placeholder="phone number"
                           className="input input-bordered"
-                          
                           required
                           name="phone"
                         />
