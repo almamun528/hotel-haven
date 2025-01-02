@@ -9,6 +9,7 @@ const MyBooking = () => {
   const [selectedRoom, setSelectedRoom] = useState(null);
   const { user } = useContext(AuthContext);
 
+  
   useEffect(() => {
     fetch(`http://localhost:3000/myBooking?email=${user?.email}`)
       .then((res) => res.json())
@@ -21,7 +22,12 @@ const MyBooking = () => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
-  // console.log(selectedRoom && selectedRoom , '---->    selected room ')
+//! Delete function 
+
+     const handleDelete = (id) => {
+       console.log("This id needs to be deleted ---> ", id);
+     }; 
+    //  Delete Function is closed 
   const handleReviewSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -35,7 +41,7 @@ const MyBooking = () => {
       timestamp: new Date().toISOString(),
       roomId: selectedRoom._id,
     };
-    // acknowledged
+    
     //!send the review to backend by api
     fetch("http://localhost:3000/myBooking", {
       method: "POST",
@@ -55,8 +61,12 @@ const MyBooking = () => {
           form.reset();
         }
        
+     
       });
-  };
+    //  ! Review API ends
+
+    
+};
 
   return (
     <>
@@ -98,8 +108,12 @@ const MyBooking = () => {
                         Review
                       </button>
                     </td>
-                    <td className="text-red-500 text-xl font-bold cursor-pointer ">
-                      X
+                    <td className="text-red-500 text-xl font-bold cursor-pointer">
+                      <button
+                        onClick={() => handleDelete(room._id)}
+                      >
+                        X
+                      </button>
                     </td>
                   </tr>
                 ))}
