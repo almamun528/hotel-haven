@@ -13,7 +13,8 @@ const Hotels = () => {
     return (
       <>
        
-           <section className='grid grid-cols-1 md:grid-cols-3  gap-5'>
+           <section className='grid grid-cols-1 md:grid-cols-3 md:my-20 gap-5'>
+            {/*  */}
             {
                 rooms && rooms?.map((rooms, index)=><HotelCard key={index} rooms={rooms}/>)
             }

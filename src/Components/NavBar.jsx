@@ -16,13 +16,13 @@ const NavBar = () => {
  };
     const links = (
       <>
-        <li>
+        <li className='font-semibold md:text-lg'>
           {" "}
           <Link to="/"> Home </Link>{" "}
         </li>
-        <li>
+        <li className='font-semibold md:text-lg'>
           {" "}
-          <Link to="/hotels"> Hotels </Link>{" "}
+          <Link to="/hotels"> Rooms </Link>{" "}
         </li>
         {/* <li>
           {" "}
@@ -46,8 +46,8 @@ const NavBar = () => {
 
     return (
       <>
-        <div className="navbar bg-base-100">
-          <div className="navbar-start">
+        <div className="navbar bg-base-200 sticky top-0 z-10">
+          <div className="navbar-start  ">
             <div className="dropdown">
               <div
                 tabIndex={0}
