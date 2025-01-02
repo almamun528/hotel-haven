@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import AuthContext from "../Provider/AuthContext";
 import DatePicker from "react-datepicker";
@@ -8,11 +8,22 @@ import Swal from "sweetalert2";
 const Details = () => {
   const hotelData = useLoaderData();
   const { user } = useContext(AuthContext);
+  const [reviews, setReviews] = useState([]);
+
+  // ! Get All reviews data from backend
+  useEffect(() => {
+    fetch("http://localhost:3000/user-reviews")
+      .then((res) => res.json())
+      .then((data) => {
+        setReviews(data);
+      });
+  }, []);
+  // console.log(reviews)
+  // Data Load is Closed 
+  
+  const [selectedDate, setSelectedDate] = useState(new Date()); 
   const UserEmail = user?.email;
   const price = 200;
-
-  const [selectedDate, setSelectedDate] = useState(new Date()); // State for date picker
-
   // ? DeStructure the Object
   const {
     title,
@@ -27,6 +38,9 @@ const Details = () => {
     image,
     _id,
   } = hotelData;
+ 
+
+const userReviews = reviews.filter((review) => review.myBookingId === _id);
 
   const handleBookingForm = (e) => {
     e.preventDefault();
@@ -36,6 +50,7 @@ const Details = () => {
     const bed = beds;
     const pricePerNight = form.price.value;
     const phoneNumber = form.phone.value;
+    const roomIdNumber = _id 
     // Booking Data
     const bookedRoom = {
       myEmail,
@@ -43,9 +58,11 @@ const Details = () => {
       bed,
       pricePerNight,
       phoneNumber,
+      roomIdNumber,
       bookingDate: selectedDate, // Include the selected date
     };
-    console.log(bookedRoom);
+    
+
     // ? Send the Booking Data to the dataBase
     fetch("http://localhost:3000/hotel-booking", {
       method: "POST",
@@ -57,21 +74,22 @@ const Details = () => {
         return res.json();
       })
       .then((data) => {
-        if(data.acknowledged){
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Room Is Booked For You",
-              showConfirmButton: false,
-              timer: 1500,
-            });
+        if (data.acknowledged) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Room Is Booked For You",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
         console.log(data);
       })
       .catch((error) => {
         console.error("Error:", error); // Catch and log any errors
       });
-  };
+      
+    };
 
   return (
     <>
@@ -91,6 +109,7 @@ const Details = () => {
                 {" "}
                 <b>Beds : </b> {beds}{" "}
               </p>
+
               <p>
                 {" "}
                 <b>View : </b> {view}{" "}
@@ -225,6 +244,35 @@ const Details = () => {
             </div>
           </div>
         </div>
+      </section>
+      <br />
+      {/* User review Section */}
+
+      <section className="my-3">
+        <h2>User Reviews:</h2>
+        {userReviews && userReviews.length > 0 ? (
+          userReviews.map((rev) => (
+            <main
+              key={rev._id}
+              className="p-4 bg-gray-100 my-2 rounded grid grid-cols-1 md:grid-cols-3"
+            >
+              <p>
+                <strong>User Email:</strong> {rev.username}
+              </p>
+              <p>
+                <strong>Rating:</strong> {rev.rating}
+              </p>
+              <p>
+                <strong>Comment:</strong> {rev.comment}
+              </p>
+              <p>
+                <small>{new Date(rev.timestamp).toLocaleString()}</small>
+              </p>
+            </main>
+          ))
+        ) : (
+          <p className="text-red-500">No reviews found for this hotel.</p>
+        )}
       </section>
     </>
   );

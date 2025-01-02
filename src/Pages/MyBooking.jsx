@@ -9,7 +9,7 @@ const MyBooking = () => {
   const [selectedRoom, setSelectedRoom] = useState(null);
   const { user } = useContext(AuthContext);
 
-  
+//   Load data which are match with users Email and Set into State 
   useEffect(() => {
     fetch(`http://localhost:3000/myBooking?email=${user?.email}`)
       .then((res) => res.json())
@@ -17,7 +17,7 @@ const MyBooking = () => {
         setMyRoom(data);
       });
   }, [user?.email]);
-
+// console.log(myRoom, '  my all rooms ')
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -33,13 +33,14 @@ const MyBooking = () => {
     const form = e.target;
     const rating = form.rating.value;
     const comment = form.comment.value;
-
+    const myBookingId = selectedRoom.roomIdNumber;
     const review = {
       username: user.email,
       rating,
       comment,
       timestamp: new Date().toISOString(),
       roomId: selectedRoom._id,
+      myBookingId,
     };
     
     //!send the review to backend by api
@@ -96,6 +97,7 @@ const MyBooking = () => {
                     <td>{room.roomName}</td>
                     <td>{room.email}</td>
                     <td>{room.bed}</td>
+                    <td className="bg-red-500 text-white"> {room.roomIdNumber}</td>
                     <td>{formatDate(room.bookingDate)}</td>
                     <td>
                       <button
