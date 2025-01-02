@@ -260,7 +260,7 @@ const userReviews = reviews.filter((review) => review.myBookingId === _id);
                 <strong>User Email:</strong> {rev.username}
               </p>
               <p>
-                <strong>Rating:</strong> {rev.rating}
+                <strong>Rating:</strong> {rev.rating} Out of 5
               </p>
               <p>
                 <strong>Comment:</strong> {rev.comment}
@@ -271,7 +271,13 @@ const userReviews = reviews.filter((review) => review.myBookingId === _id);
             </main>
           ))
         ) : (
-          <p className="text-red-500">No reviews found for this hotel.</p>
+          <>
+            <p className="text-red-500">No reviews found for this hotel.</p>
+            <span className="text-green-500">
+              Please Book a Room and Go to My Booking Page You Might get the
+              option to review
+            </span>
+          </>
         )}
       </section>
     </>

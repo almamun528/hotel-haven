@@ -9,7 +9,7 @@ const MyBooking = () => {
   const [selectedRoom, setSelectedRoom] = useState(null);
   const { user } = useContext(AuthContext);
 
-//   Load data which are match with users Email and Set into State 
+  //   Load data which are match with users Email and Set into State
   useEffect(() => {
     fetch(`http://localhost:3000/myBooking?email=${user?.email}`)
       .then((res) => res.json())
@@ -17,17 +17,49 @@ const MyBooking = () => {
         setMyRoom(data);
       });
   }, [user?.email]);
-// console.log(myRoom, '  my all rooms ')
+
+  // console.log(myRoom, '  my all rooms ')
+
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
-//! Delete function 
 
-     const handleDelete = (id) => {
-       console.log("This id needs to be deleted ---> ", id);
-     }; 
-    //  Delete Function is closed 
+  //! Delete function
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/myBooking/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            // console.log(data);
+            if (data.deletedCount) {
+              // Remove the deleted item from the state
+              setMyRoom((prevRooms) =>prevRooms.filter((room) => room._id !== id))
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your Booking Is Deleted.",
+                icon: "success",
+              });
+            }
+          });
+      }
+    });
+  };
+  //  Delete Function is closed
+
+  // Form to collect the data
   const handleReviewSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -42,7 +74,7 @@ const MyBooking = () => {
       roomId: selectedRoom._id,
       myBookingId,
     };
-    
+
     //!send the review to backend by api
     fetch("http://localhost:3000/myBooking", {
       method: "POST",
@@ -61,13 +93,10 @@ const MyBooking = () => {
           });
           form.reset();
         }
-       
-     
       });
     //  ! Review API ends
-
-    
-};
+    // Delete API Starts
+  };
 
   return (
     <>
@@ -97,7 +126,6 @@ const MyBooking = () => {
                     <td>{room.roomName}</td>
                     <td>{room.email}</td>
                     <td>{room.bed}</td>
-                    <td className="bg-red-500 text-white"> {room.roomIdNumber}</td>
                     <td>{formatDate(room.bookingDate)}</td>
                     <td>
                       <button
@@ -111,11 +139,7 @@ const MyBooking = () => {
                       </button>
                     </td>
                     <td className="text-red-500 text-xl font-bold cursor-pointer">
-                      <button
-                        onClick={() => handleDelete(room._id)}
-                      >
-                        X
-                      </button>
+                      <button onClick={() => handleDelete(room._id)}>X</button>
                     </td>
                   </tr>
                 ))}
