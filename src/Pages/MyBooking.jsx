@@ -1,20 +1,61 @@
 import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "../Provider/AuthContext";
+import { Rating } from "react-simple-star-rating";
+import Swal from "sweetalert2";
 
 const MyBooking = () => {
   const [myRoom, setMyRoom] = useState([]);
-    const {user} = useContext(AuthContext)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRoom, setSelectedRoom] = useState(null);
+  const { user } = useContext(AuthContext);
+
   useEffect(() => {
     fetch(`http://localhost:3000/myBooking?email=${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setMyRoom(data);
       });
-  }, []);
+  }, [user?.email]);
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+  // console.log(selectedRoom && selectedRoom , '---->    selected room ')
+  const handleReviewSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const rating = form.rating.value;
+    const comment = form.comment.value;
+
+    const review = {
+      username: user.email,
+      rating,
+      comment,
+      timestamp: new Date().toISOString(),
+      roomId: selectedRoom._id,
+    };
+    // acknowledged
+    //!send the review to backend by api
+    fetch("http://localhost:3000/myBooking", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(review),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your feedback has been saved",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          form.reset();
+        }
+       
+      });
   };
 
   return (
@@ -26,10 +67,9 @@ const MyBooking = () => {
       <section className="my-10">
         <div className="overflow-x-auto">
           <table className="table">
-            {/* head */}
             <thead>
               <tr>
-                <th></th>
+                <th>Serial</th>
                 <th>Room Name</th>
                 <th>Your Email</th>
                 <th>Number Of Bed</th>
@@ -47,8 +87,18 @@ const MyBooking = () => {
                     <td>{room.email}</td>
                     <td>{room.bed}</td>
                     <td>{formatDate(room.bookingDate)}</td>
-                    <td>Review</td>
-                    <td className="text-red-500 text-xl font-bold cursor-pointer">
+                    <td>
+                      <button
+                        className="btn"
+                        onClick={() => {
+                          setSelectedRoom(room);
+                          setIsModalOpen(true);
+                        }}
+                      >
+                        Review
+                      </button>
+                    </td>
+                    <td className="text-red-500 text-xl font-bold cursor-pointer ">
                       X
                     </td>
                   </tr>
@@ -57,6 +107,69 @@ const MyBooking = () => {
           </table>
         </div>
       </section>
+
+      {isModalOpen && selectedRoom && (
+        <dialog open className="modal">
+          <div className="modal-box">
+            <h3 className="text-lg font-bold">
+              Review for {selectedRoom.roomName}
+            </h3>
+            <form onSubmit={handleReviewSubmit} className="card-body">
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Username</span>
+                </label>
+                <input
+                  type="text"
+                  value={user.email}
+                  className="input input-bordered"
+                  readOnly
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Rating</span>
+                </label>
+                <Rating
+                  initialValue={0}
+                  size={25}
+                  fillColor="#f59e0b"
+                  className="mt-1"
+                  required
+                />
+                <input
+                  type="number"
+                  name="rating"
+                  min="1"
+                  max="5"
+                  className="input input-bordered mt-2"
+                  placeholder="Rating (1-5)"
+                  required
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Comment</span>
+                </label>
+                <textarea
+                  name="comment"
+                  className="textarea textarea-bordered"
+                  placeholder="Write your comment here..."
+                  required
+                ></textarea>
+              </div>
+              <div className="form-control mt-4">
+                <button className="btn btn-primary">Submit Review</button>
+              </div>
+            </form>
+            <div className="modal-action">
+              <button className="btn" onClick={() => setIsModalOpen(false)}>
+                Close
+              </button>
+            </div>
+          </div>
+        </dialog>
+      )}
     </>
   );
 };
