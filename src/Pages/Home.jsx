@@ -1,25 +1,23 @@
-import Hotels from './Hotels';
-
-
-
+import Carousel from "../Components/Carousel";
+import TeamMember from "../Components/TeamMember";
+import Hotels from "./Hotels";
 
 const Home = () => {
+  return (
+    <>
+      <Carousel />
 
-
-
-
-
-
-    return (
-      <>
-        <h2 className="bg-green-400 text-4xl text-center py-4">
-          This Is Home Page
+      <section className="my-5">
+        <h2 className="text-xl font-semibold text-center my-4 underline">
+          Rooms We Are Providing $200 In This week!
         </h2>
-        <section className="my-5">
-          <Hotels />
-        </section>
-      </>
-    );
+
+        <Hotels />
+      </section>
+
+      <TeamMember />
+    </>
+  );
 };
 
 export default Home;
