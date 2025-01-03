@@ -12,6 +12,9 @@ import {
 const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  
+  // Initialize Google Auth Provider
+  const googleProvider = new GoogleAuthProvider();
 
   // !Create User Function
   const createUser = (email, password) => {

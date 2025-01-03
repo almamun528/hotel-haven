@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import AuthContext from '../Provider/AuthContext';
 
 const NavBar = () => {
-  const {user, logOut}= useContext(AuthContext)
+  const { user, logOut, signInWithGoogle } = useContext(AuthContext);
 //  console.log(user)
+//  const handleGoogle=()=>{
+//   signInWithGoogle()
+//  }
  const handleLogOut = () => {
    logOut()
      .then(() => {
@@ -118,6 +121,12 @@ const NavBar = () => {
                   <Link to="/register">
                     <button className="btn btn-primary">Register</button>
                   </Link>
+                  <button
+                    onClick={signInWithGoogle}
+                    className="btn btn-primary"
+                  >
+                    Google
+                  </button>
                 </div>
               </>
             )}

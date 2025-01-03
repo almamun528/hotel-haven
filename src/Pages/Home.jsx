@@ -6,6 +6,7 @@ import Map from "../Components/Map";
 
 const Home = () => {
     const [reviews, setReviews] = useState();
+    const [rooms, setRooms]=useState([])
      useEffect(() => {
         fetch("http://localhost:3000/user-reviews")
           .then((res) => res.json())
@@ -13,6 +14,8 @@ const Home = () => {
             setReviews(data);
           });
       }, []);
+  
+    
   return (
     <>
       {/* Slider */}
@@ -22,7 +25,7 @@ const Home = () => {
         <h2 className="text-xl font-semibold text-center my-4 underline">
           Rooms We Are Providing $200 In This week!
         </h2>
-        <Hotels />
+        <Hotels/>
       </section>
       {/* Map starts */}
             <Map/>
