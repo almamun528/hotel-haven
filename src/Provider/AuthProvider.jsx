@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import AuthContext from './AuthContext';
-import auth from '../Firebase/Firebase.init'
+import React, { useEffect, useState } from "react";
+import AuthContext from "./AuthContext";
+import auth from "../Firebase/Firebase.init";
+import axios from "axios";
 import {
   signInWithPopup,
   GoogleAuthProvider,
@@ -9,10 +10,10 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  
+
   // Initialize Google Auth Provider
   const googleProvider = new GoogleAuthProvider();
 
@@ -41,7 +42,23 @@ const AuthProvider = ({children}) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false);
+      console.log("State capture ", currentUser);
+      if (currentUser?.email) {
+        const user = { email: currentUser.email };
+        axios
+          .post("http://localhost:3000/jwt", user, { withCredentials: true })
+          .then((res) => {
+            setLoading(false);
+            console.log("Login token--->  ", res.data)});
+      } else {
+        axios
+          .post(
+            "http://localhost:3000/logout",{},{withCredentials: true,})
+          .then((res) => {
+            setLoading(false);
+            console.log("logout", res.data);
+          });
+      }
     });
     return () => {
       unSubscribe();
