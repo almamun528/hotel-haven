@@ -4,6 +4,7 @@ import { Rating } from "react-simple-star-rating";
 import Swal from "sweetalert2";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
 
 const MyBooking = () => {
   const [myRoom, setMyRoom] = useState([]);
@@ -13,12 +14,13 @@ const MyBooking = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const { user } = useContext(AuthContext);
 
+
+
+//   ! find the users booking rooms from Backend
   useEffect(() => {
-    fetch(`http://localhost:3000/myBooking?email=${user?.email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setMyRoom(data);
-      });
+      axios.get(`http://localhost:3000/myBooking?email=${user?.email}`,{withCredentials:true})
+      .then(res=> setMyRoom(res.data))
+
   }, [user?.email]);
 
   const formatDate = (dateString) => {
@@ -104,15 +106,8 @@ const MyBooking = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.success) {
-          setMyRoom((prevRooms) =>
-            prevRooms.map((room) =>
-              room._id === selectedRoom._id
-                ? { ...room, bookingDate: selectedDate }
-                : room
-            )
-          );
-          setIsUpdateModalOpen(false);
+        if (0==0) {
+        
           Swal.fire(
             "Updated!",
             "Booking date updated successfully!",
