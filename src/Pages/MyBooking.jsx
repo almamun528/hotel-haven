@@ -36,7 +36,7 @@ const MyBooking = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Yes, Cancel it!",
     }).then((result) => {
       if (result.isConfirmed) {
         fetch(`http://localhost:3000/myBooking/${id}`, { method: "DELETE" })
@@ -46,7 +46,7 @@ const MyBooking = () => {
               setMyRoom((prevRooms) =>
                 prevRooms.filter((room) => room._id !== id)
               );
-              Swal.fire("Deleted!", "Your Booking Is Deleted.", "success");
+              Swal.fire("Done!", "Your Booking Is Cancelled.", "success");
             }
           });
       }
@@ -177,7 +177,7 @@ const MyBooking = () => {
                     </button>
                   </td>
                   <td className="text-red-500 text-xl font-bold cursor-pointer">
-                    <button onClick={() => handleDelete(room._id)}>X</button>
+                    <button onClick={() => handleDelete(room._id)}> cancel</button>
                   </td>
                 </tr>
               ))}
