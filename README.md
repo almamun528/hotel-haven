@@ -32,7 +32,7 @@ Welcome to the Hotel Booking Platform, a modern and interactive application desi
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-username/hotel-booking-platform.git
+   git clone https://github.com/almamun528/hotel-haven 
    cd hotel-booking-platform
    ```
 
