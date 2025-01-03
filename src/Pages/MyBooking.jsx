@@ -7,11 +7,11 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const MyBooking = () => {
   const [myRoom, setMyRoom] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState(null);
-  const { user } = useContext(AuthContext);
-  const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     fetch(`http://localhost:3000/myBooking?email=${user?.email}`)
@@ -56,14 +56,13 @@ const MyBooking = () => {
     const form = e.target;
     const rating = form.rating.value;
     const comment = form.comment.value;
-    const myBookingId = selectedRoom.roomIdNumber;
     const review = {
       username: user.email,
       rating,
       comment,
       timestamp: new Date().toISOString(),
       roomId: selectedRoom._id,
-      myBookingId,
+      myBookingId: selectedRoom.roomIdNumber,
     };
 
     fetch("http://localhost:3000/myBooking", {
@@ -82,11 +81,12 @@ const MyBooking = () => {
             timer: 1500,
           });
           form.reset();
+          setIsReviewModalOpen(false);
         }
       });
   };
 
-  const handleUpdateSubmit = async (e) => {
+  const handleUpdateSubmit = (e) => {
     e.preventDefault();
     if (!selectedDate) {
       return Swal.fire({
@@ -96,39 +96,38 @@ const MyBooking = () => {
       });
     }
 
-    try {
-      const response = await fetch(
-        `http://localhost:3000/update-booking/${selectedRoom._id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ newDate: selectedDate }),
+
+    fetch(`http://localhost:3000/update-booking/${selectedRoom._id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ newDate: selectedDate }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setMyRoom((prevRooms) =>
+            prevRooms.map((room) =>
+              room._id === selectedRoom._id
+                ? { ...room, bookingDate: selectedDate }
+                : room
+            )
+          );
+          setIsUpdateModalOpen(false);
+          Swal.fire(
+            "Updated!",
+            "Booking date updated successfully!",
+            "success"
+          );
         }
-      );
-
-      const data = await response.json();
-
-      if (data.success) {
-        setMyRoom((prevRooms) =>
-          prevRooms.map((room) =>
-            room._id === selectedRoom._id
-              ? { ...room, bookingDate: selectedDate }
-              : room
-          )
-        );
-        setUpdateModalOpen(false);
-        Swal.fire("Updated!", "Booking date updated successfully!", "success");
-      } else {
+      })
+      .catch((error) => {
+        console.error("Error updating booking date:", error);
         Swal.fire({
-          icon: "Success",
-          title: "Date Is updated",
-          //   text: data.message ||,
+          icon: "error",
+          title: "Error!",
+          text: "An error occurred.",
         });
-      }
-    } catch (error) {
-      console.error("Error updating booking date:", error);
-      Swal.fire({ icon: "error", title: "Error!", text: "An error occurred." });
-    }
+      });
   };
 
   return (
@@ -164,7 +163,7 @@ const MyBooking = () => {
                       className="btn"
                       onClick={() => {
                         setSelectedRoom(room);
-                        setIsModalOpen(true);
+                        setIsReviewModalOpen(true);
                       }}
                     >
                       Review
@@ -175,7 +174,7 @@ const MyBooking = () => {
                       className="btn"
                       onClick={() => {
                         setSelectedRoom(room);
-                        setUpdateModalOpen(true);
+                        setIsUpdateModalOpen(true);
                         setSelectedDate(new Date(room.bookingDate));
                       }}
                     >
@@ -192,13 +191,69 @@ const MyBooking = () => {
         </div>
       </section>
 
-      {isModalOpen && selectedRoom && (
+      {isReviewModalOpen && selectedRoom && (
         <dialog open className="modal">
-          {/* ... (Review Modal Content - Same as before) */}
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">
+              Leave a Review for {selectedRoom.roomName}
+            </h3>
+            <form onSubmit={handleReviewSubmit} className="space-y-4">
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Your Email</span>
+                </label>
+                <input
+                  type="text"
+                  value={user.email}
+                  disabled
+                  className="input input-bordered"
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Rating</span>
+                </label>
+                <Rating
+                  name="rating"
+                  onClick={(rate) =>
+                    (document.querySelector('input[name="rating"]').value =
+                      rate)
+                  }
+                  allowHalfIcon={false}
+                  size={30}
+                  initialValue={0}
+                  required
+                />
+                <input type="hidden" name="rating" required />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Comment</span>
+                </label>
+                <textarea
+                  name="comment"
+                  className="textarea textarea-bordered"
+                  placeholder="Write your feedback here..."
+                  required
+                ></textarea>
+              </div>
+              <div className="modal-action">
+                <button type="submit" className="btn btn-primary">
+                  Submit Review
+                </button>
+                <button
+                  className="btn"
+                  onClick={() => setIsReviewModalOpen(false)}
+                >
+                  Close
+                </button>
+              </div>
+            </form>
+          </div>
         </dialog>
       )}
 
-      {updateModalOpen && selectedRoom && (
+      {isUpdateModalOpen && selectedRoom && (
         <dialog open className="modal">
           <div className="modal-box">
             <h3 className="text-lg font-bold">
@@ -222,7 +277,10 @@ const MyBooking = () => {
               </div>
             </form>
             <div className="modal-action">
-              <button className="btn" onClick={() => setUpdateModalOpen(false)}>
+              <button
+                className="btn"
+                onClick={() => setIsUpdateModalOpen(false)}
+              >
                 Close
               </button>
             </div>
