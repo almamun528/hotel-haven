@@ -12,7 +12,7 @@ const Details = () => {
 
   // ! Get All reviews data from backend
   useEffect(() => {
-    fetch("http://localhost:3000/user-reviews")
+    fetch("https://hotel-server-chi.vercel.app/user-reviews")
       .then((res) => res.json())
       .then((data) => {
         setReviews(data);
@@ -64,7 +64,7 @@ const userReviews = reviews.filter((review) => review.myBookingId === _id);
     
 
     // ? Send the Booking Data to the dataBase
-    fetch("http://localhost:3000/hotel-booking", {
+    fetch("https://hotel-server-chi.vercel.app/hotel-booking", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(bookedRoom),

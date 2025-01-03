@@ -46,14 +46,20 @@ const AuthProvider = ({ children }) => {
       if (currentUser?.email) {
         const user = { email: currentUser.email };
         axios
-          .post("http://localhost:3000/jwt", user, { withCredentials: true })
+          .post("https://hotel-server-chi.vercel.app/jwt", user, {
+            withCredentials: true,
+          })
           .then((res) => {
             setLoading(false);
-            console.log("Login token--->  ", res.data)});
+            console.log("Login token--->  ", res.data);
+          });
       } else {
         axios
           .post(
-            "http://localhost:3000/logout",{},{withCredentials: true,})
+            "https://hotel-server-chi.vercel.app/logout",
+            {},
+            { withCredentials: true }
+          )
           .then((res) => {
             setLoading(false);
             console.log("logout", res.data);

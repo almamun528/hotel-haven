@@ -60,6 +60,8 @@ Welcome to the Hotel Booking Platform, a modern and interactive application desi
    npm run dev
    ```
    The application will be accessible at `http://localhost:5173`.
+   The main backend API is `https://hotel-server-chi.vercel.app`
+   
 
 ## Project Highlights
 

@@ -8,7 +8,7 @@ const Home = () => {
     const [reviews, setReviews] = useState();
     const [rooms, setRooms]=useState([])
      useEffect(() => {
-        fetch("http://localhost:3000/user-reviews")
+        fetch("https://hotel-server-chi.vercel.app/user-reviews")
           .then((res) => res.json())
           .then((data) => {
             setReviews(data);

@@ -5,9 +5,9 @@ import HotelCard from '../Components/HotelCard';
 const Hotels = () => {
     const [rooms, setRooms] = useState()
     useEffect(()=>{
-        fetch('http://localhost:3000/hotels')
-        .then(res =>res.json())
-        .then(data => setRooms(data))
+        fetch("https://hotel-server-chi.vercel.app/hotels")
+          .then((res) => res.json())
+          .then((data) => setRooms(data));
     },[])
 
     return (

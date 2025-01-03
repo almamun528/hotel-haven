@@ -18,8 +18,12 @@ const MyBooking = () => {
 
 //   ! find the users booking rooms from Backend
   useEffect(() => {
-      axios.get(`http://localhost:3000/myBooking?email=${user?.email}`,{withCredentials:true})
-      .then(res=> setMyRoom(res.data))
+      axios
+        .get(
+          `https://hotel-server-chi.vercel.app/myBooking?email=${user?.email}`,
+          { withCredentials: true }
+        )
+        .then((res) => setMyRoom(res.data));
 
   }, [user?.email]);
 
@@ -39,7 +43,9 @@ const MyBooking = () => {
       confirmButtonText: "Yes, Cancel it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/myBooking/${id}`, { method: "DELETE" })
+        fetch(`https://hotel-server-chi.vercel.app/myBooking/${id}`, {
+          method: "DELETE",
+        })
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount) {
@@ -67,7 +73,7 @@ const MyBooking = () => {
       myBookingId: selectedRoom.roomIdNumber,
     };
 
-    fetch("http://localhost:3000/myBooking", {
+    fetch("https://hotel-server-chi.vercel.app/myBooking", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(review),
@@ -99,15 +105,17 @@ const MyBooking = () => {
     }
 
 
-    fetch(`http://localhost:3000/update-booking/${selectedRoom._id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ newDate: selectedDate }),
-    })
+    fetch(
+      `https://hotel-server-chi.vercel.app/update-booking/${selectedRoom._id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ newDate: selectedDate }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
-        if (0==0) {
-        
+        if (0 == 0) {
           Swal.fire(
             "Updated!",
             "Booking date updated successfully!",
